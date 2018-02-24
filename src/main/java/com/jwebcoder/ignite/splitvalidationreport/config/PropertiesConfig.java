@@ -95,4 +95,46 @@ public class PropertiesConfig {
 
         return countryMapping;
     }
+
+    @Bean(name = "headerCountMapping")
+    public Map<String, Integer> getHeaderCountMapping(Properties configInfo) throws IOException {
+        Map<String, Integer> headerCountMapping = new HashMap<>();
+
+        FileInputStream inputStream = null;
+        XSSFWorkbook mappingWorkbook = null;
+
+        try {
+            inputStream = new FileInputStream(new File(configInfo.getProperty("headerCountMappingPath")));
+
+            mappingWorkbook = new XSSFWorkbook(inputStream);
+
+
+            XSSFSheet mappingSheet = mappingWorkbook.getSheetAt(0);
+
+            for (Iterator rowIterator = mappingSheet.iterator(); rowIterator.hasNext(); ) {
+
+                XSSFRow row = (XSSFRow) rowIterator.next();
+
+                String key = row.getCell(0).getStringCellValue();
+
+                Integer value = Integer.valueOf(row.getCell(1).getStringCellValue());
+
+                headerCountMapping.put(key, value);
+
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
+        }
+
+        return headerCountMapping;
+    }
+
+
 }

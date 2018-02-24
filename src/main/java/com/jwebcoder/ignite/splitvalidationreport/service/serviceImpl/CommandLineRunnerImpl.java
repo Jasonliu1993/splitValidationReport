@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.Properties;
+import java.util.Set;
 
 @Service
 public class CommandLineRunnerImpl implements CommandLineRunner{
@@ -27,9 +28,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner{
     @Override
     public void run(String... strings) throws Exception {
 
-        System.out.println(File.separatorChar);
-        outputFileRootPath = configInfo.getProperty("outputFileRootPath");
-
+        Set<String> key = sourceFilePropertiesPath.stringPropertyNames();
 
 
     }
